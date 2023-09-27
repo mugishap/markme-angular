@@ -1,1 +1,42 @@
-<p>signup works!</p>
+<div class="flex flex-col items-center justify-center min-h-screen">
+    <div class="p-4 flex flex-col border-2 rounded w-4/12">
+        <form [formGroup]="signupForm" class="flex flex-col w-full">
+            <div class="flex items-center mx-auto my-4">
+                <img src="../../../assets/logo.png" class="w-10" alt="">
+                <span class="font-bold text-lg">MarkMe</span>
+            </div>
+            <div class='w-full my-2'>
+                <label class="text-sm font-medium leading-none text-gray-800 ">
+                    Names
+                </label>
+                <input aria-label="enter name" role="input" type="text" formControlName="names"
+                    class="bg-gray-200 border rounded focus:outline-none text-sm font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2"
+                    placeholder="e.g: Mugisha Precieux" />
+            </div>
+            <div class='w-full my-2'>
+                <label class="text-sm font-medium leading-none text-gray-800 ">
+                    Email
+                </label>
+                <input aria-label="enter email" role="input" type="email" formControlName="email"
+                    class="bg-gray-200 border rounded focus:outline-none text-sm font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2"
+                    placeholder="e.g: precieuxmugisha@gmail.com" />
+            </div>
+            <div class='w-full my-2'>
+                <label class="text-sm font-medium leading-none text-gray-800 ">
+                    Telephone
+                </label>
+                <input aria-label="enter telephone" role="input" type="text" formControlName="telephone"
+                    class="bg-gray-200 border rounded focus:outline-none text-sm font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2"
+                    placeholder="e.g: +250782307144" />
+            </div>
+            <div class='w-full my-2'>
+                <label class="text-sm font-medium leading-none text-gray-800 ">
+                    Password
+                </label>
+                <input aria-label="enter password" role="input" type="password" formControlName="password"
+                    class="bg-gray-200 border rounded focus:outline-none text-sm font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2"
+                    placeholder="********" />
+            </div>
+        </form>
+    </div>
+</div>
