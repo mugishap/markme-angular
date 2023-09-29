@@ -10,6 +10,7 @@ import { StudentComponent } from './pages/student/student.component';
 import { TeacherComponent } from './pages/teacher/teacher.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormErrorComponent } from './components/form-error/form-error.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     SignupComponent,
     StudentComponent,
     TeacherComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    FormErrorComponent
   ],
   imports: [
     BrowserModule,

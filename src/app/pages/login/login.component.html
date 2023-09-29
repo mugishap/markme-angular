@@ -1,1 +1,53 @@
-<p>login works!</p>
+<div class="flex flex-col items-center justify-center min-h-screen">
+    <div class="p-8 flex flex-col sm:border-2 rounded w-full sm:w-8/12 mlg:w-6/12 xl:w-4/12">
+        <form [formGroup]="loginForm" class="flex flex-col w-full items-center">
+            <div class="flex items-center mx-auto my-4">
+                <img src="../../../assets/logo.png" class="w-10" alt="">
+                <span class="font-bold text-xl">MarkMe</span>
+            </div>
+
+            <div class='w-full my-2'>
+                <label class="text-sm font-medium leading-none text-gray-800 ">
+                    Email
+                </label>
+                <input aria-label="enter email" role="input" type="email" formControlName="email"
+                    class="bg-gray-200 border rounded focus:outline-none text-sm font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2"
+                    placeholder="e.g: precieuxmugisha@gmail.com" />
+                <div class="flex flex-col">
+                    <form-error [error]="'Email is required'"
+                        *ngIf="this.loginForm.get('email')?.hasError('required') && this.loginForm.get('email')?.touched"></form-error>
+                    <form-error [error]="'Email should be valid'"
+                        *ngIf="this.loginForm.get('email')?.hasError('email') && this.loginForm.get('email')?.touched"></form-error>
+                </div>
+            </div>
+
+            <div class='w-full my-2'>
+                <label class="text-sm font-medium leading-none text-gray-800 ">
+                    Password
+                </label>
+                <div class="w-full relative">
+                    <input aria-label="enter password" role="input" type="password" formControlName="password"
+                        class="bg-gray-200 border rounded focus:outline-none text-sm font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2"
+                        placeholder="********" />
+                    <i class="absolute cursor-pointer text-lg right-2 top-4 text-gray-700 z-10" [ngClass]="{
+                        'fa-eye': !showPassword,
+                        'fa-eye-slash': showPassword
+                    }" (click)="showPassword = !showPassword"></i>
+                    <div class="flex flex-col">
+                        <form-error [error]="'Password is required'"
+                            *ngIf="this.loginForm.get('password')?.hasError('required') && this.loginForm.get('password')?.touched" />
+                        <form-error
+                            [error]="'It must have atleast 4 characters, one uppercase, smallcase, sign and number'"
+                            *ngIf="this.loginForm.get('password')?.hasError('pattern') && this.loginForm.get('password')?.touched" />
+                    </div>
+                </div>
+            </div>
+            <span class="flex items-center">New to the portal? &nbsp; <a routerLink="/auth/signup"
+                    class="text-orange-500 hover:underline">Register</a></span>
+            <button type="submit"
+                class="bg-primary-orange text-white w-44 flex items-center justify-center h-10 rounded-lg mx-auto my-4">
+                Continue
+            </button>
+        </form>
+    </div>
+</div>

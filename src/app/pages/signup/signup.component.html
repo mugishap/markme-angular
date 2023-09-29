@@ -1,9 +1,9 @@
 <div class="flex flex-col items-center justify-center min-h-screen">
-    <div class="p-4 flex flex-col border-2 rounded w-4/12">
-        <form [formGroup]="signupForm" class="flex flex-col w-full">
+    <div class="p-8 flex flex-col sm:border-2 rounded w-full sm:w-8/12 mlg:w-6/12 xl:w-4/12">
+        <form [formGroup]="signupForm" class="flex flex-col w-full items-center" (ngSubmit)="handleSubmit()">
             <div class="flex items-center mx-auto my-4">
                 <img src="../../../assets/logo.png" class="w-10" alt="">
-                <span class="font-bold text-lg">MarkMe</span>
+                <span class="font-bold text-xl">MarkMe</span>
             </div>
             <div class='w-full my-2'>
                 <label class="text-sm font-medium leading-none text-gray-800 ">
@@ -11,7 +11,15 @@
                 </label>
                 <input aria-label="enter name" role="input" type="text" formControlName="names"
                     class="bg-gray-200 border rounded focus:outline-none text-sm font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2"
-                    placeholder="e.g: Mugisha Precieux" />
+                    placeholder="e.g: Mugisha Precieux" maxlength="55" />
+                <div class="flex flex-col">
+                    <form-error [error]="'Names are required'"
+                        *ngIf="this.signupForm.get('names')?.hasError('required') && this.signupForm.get('names')?.touched"></form-error>
+                    <form-error [error]="'Minimum length is 3 characters'"
+                        *ngIf="this.signupForm.get('names')?.hasError('minlength') && this.signupForm.get('names')?.touched"></form-error>
+                    <form-error [error]="'Maximum length is 50 characters'"
+                        *ngIf="this.signupForm.get('names')?.hasError('maxlength') && this.signupForm.get('names')?.touched"></form-error>
+                </div>
             </div>
             <div class='w-full my-2'>
                 <label class="text-sm font-medium leading-none text-gray-800 ">
@@ -20,6 +28,12 @@
                 <input aria-label="enter email" role="input" type="email" formControlName="email"
                     class="bg-gray-200 border rounded focus:outline-none text-sm font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2"
                     placeholder="e.g: precieuxmugisha@gmail.com" />
+                <div class="flex flex-col">
+                    <form-error [error]="'Email is required'"
+                        *ngIf="this.signupForm.get('email')?.hasError('required') && this.signupForm.get('email')?.touched"></form-error>
+                    <form-error [error]="'Email should be valid'"
+                        *ngIf="this.signupForm.get('email')?.hasError('email') && this.signupForm.get('email')?.touched"></form-error>
+                </div>
             </div>
             <div class='w-full my-2'>
                 <label class="text-sm font-medium leading-none text-gray-800 ">
@@ -28,15 +42,69 @@
                 <input aria-label="enter telephone" role="input" type="text" formControlName="telephone"
                     class="bg-gray-200 border rounded focus:outline-none text-sm font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2"
                     placeholder="e.g: +250782307144" />
+                <div class="flex flex-col">
+                    <form-error [error]="'Telephone is required'"
+                        *ngIf="this.signupForm.get('telephone')?.hasError('required') && this.signupForm.get('telephone')?.touched"></form-error>
+                    <form-error [error]="'Use the pattern +2507xxxxxxxx'"
+                        *ngIf="this.signupForm.get('telephone')?.hasError('pattern') && this.signupForm.get('telephone')?.touched"></form-error>
+                </div>
+            </div>
+            <div class="my-2 w-full">
+                <label>Gender:</label>
+                <div class="w-full flex items-center justify-between my-1">
+                    <label *ngFor="let gender of genders" class="w-1/2 flex border-2 p-2 rounded mx-1"
+                        [ngClass]="{'border-primary-orange': signupForm.get('gender')?.value === gender}">
+                        <input type="radio" [value]="gender" formControlName="gender" required>
+                        <span class="mx-4 font-semibold">{{ gender }}</span>
+                    </label>
+                </div>
+                <div *ngIf="signupForm.get('role')?.hasError('required')" class="text-danger">
+                    Please select a gender (MALE or FEMALE).
+                </div>
+            </div>
+            <div class="my-2 w-full">
+                <label>Register As:</label>
+                <div class="w-full flex items-center justify-between my-1">
+                    <label *ngFor="let role of roles" class="w-1/2 flex border-2 p-2 rounded mx-1"
+                        [ngClass]="{'border-primary-orange': signupForm.get('role')?.value === role}">
+                        <input type="radio" [value]="role" formControlName="role" required>
+                        <span class="mx-4 font-semibold">{{ role }}</span>
+                    </label>
+                </div>
+                <div *ngIf="signupForm.get('role')?.hasError('required')" class="text-danger">
+                    Please select a user type (TEACHER or STUDENT).
+                </div>
             </div>
             <div class='w-full my-2'>
                 <label class="text-sm font-medium leading-none text-gray-800 ">
                     Password
                 </label>
-                <input aria-label="enter password" role="input" type="password" formControlName="password"
-                    class="bg-gray-200 border rounded focus:outline-none text-sm font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2"
-                    placeholder="********" />
+                <div class="w-full relative">
+                    <input aria-label="enter password" role="input" type="password" formControlName="password"
+                        class="bg-gray-200 border rounded focus:outline-none text-sm font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2"
+                        placeholder="********" />
+                    <i class="absolute cursor-pointer text-lg right-2 top-4 text-gray-700 z-10" [ngClass]="{
+                        'fa-eye': !showPassword,
+                        'fa-eye-slash': showPassword
+                    }" (click)="showPassword = !showPassword"></i>
+                    <div class="flex flex-col">
+                        <form-error [error]="'Password is required'"
+                            *ngIf="this.signupForm.get('password')?.hasError('required') && this.signupForm.get('password')?.touched"></form-error>
+                        <form-error
+                            [error]="'It must have atleast 4 characters, one uppercase, smallcase, sign and number'"
+                            *ngIf="this.signupForm.get('password')?.hasError('pattern') && this.signupForm.get('password')?.touched"></form-error>
+                    </div>
+                </div>
             </div>
+            <span class="flex items-center">Already have an account? &nbsp; <a routerLink="/auth/login"
+                    class="text-orange-500 hover:underline">Login</a></span>
+            <button type="submit" role="button"
+                class="bg-primary-orange  text-white w-44 flex items-center justify-center h-10 rounded-lg mx-auto my-4">
+                <ng-container *ngIf="loading; else finishButton">
+                    <i class="fas fa-spinner fa-spin animate-spin"></i>
+                </ng-container>
+                <ng-template #finishButton>Finish</ng-template>
+            </button>
         </form>
     </div>
 </div>
