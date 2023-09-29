@@ -9,6 +9,7 @@ export class LoginComponent {
 
   loginForm: FormGroup;
   showPassword: boolean = false;
+  loading: boolean = false;
 
   constructor(private fb: FormBuilder) {
 

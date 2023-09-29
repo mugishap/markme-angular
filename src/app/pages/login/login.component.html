@@ -44,9 +44,12 @@
             </div>
             <span class="flex items-center">New to the portal? &nbsp; <a routerLink="/auth/signup"
                     class="text-orange-500 hover:underline">Register</a></span>
-            <button type="submit"
-                class="bg-primary-orange text-white w-44 flex items-center justify-center h-10 rounded-lg mx-auto my-4">
-                Continue
+            <button type="submit" role="button"
+                class="bg-primary-orange  text-white w-44 flex items-center justify-center h-10 rounded-lg mx-auto my-4">
+                <ng-container *ngIf="loading; else continueButton">
+                    <i class="fas fa-spinner fa-spin animate-spin"></i>
+                </ng-container>
+                <ng-template #continueButton>Continue</ng-template>
             </button>
         </form>
     </div>

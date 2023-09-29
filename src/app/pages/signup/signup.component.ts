@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 import { UserService } from 'src/app/services/user/user.service';
 import { Gender } from 'src/enums/gender';
 import { Role } from 'src/enums/role';
@@ -18,8 +19,9 @@ export class SignupComponent {
 
   constructor(
     private fb: FormBuilder,
-    private readonly userService: UserService
-    ) {
+    private readonly userService: UserService,
+    private toast: ToastrService
+  ) {
     this.signupForm = this.fb.group({
       names: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
       email: ['', [Validators.required, Validators.email]],
@@ -31,16 +33,8 @@ export class SignupComponent {
   }
 
   handleSubmit() {
-    try {
-      this.loading = true;
-      console.log(this.signupForm.value);
-      if (this.signupForm.invalid) return this.signupForm.markAllAsTouched();
-      this.userService.create(this.signupForm.value)
-    } catch (error) {
-
-    } finally {
-      this.loading = false;
-    }
+    if (this.signupForm.invalid) return this.signupForm.markAllAsTouched();
+    this.userService.create(this.signupForm.value, this.loading)
   }
 
 }
